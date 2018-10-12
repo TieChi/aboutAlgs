@@ -1,3 +1,8 @@
+/*
+    链表部分还有原地翻转没有清晰的注释，
+    环形验证没有实现
+ */
+
 // 链表节点
 class ListNode{
     constructor(val) {
@@ -93,6 +98,7 @@ class LinkedList {
         }
         this.head = root;
     }
+    // 原地翻转
     reverse3List() {
         let t = null;
         let p = this.head;
@@ -109,6 +115,8 @@ class LinkedList {
         }
         this.head = p;
     }
+    // 检查环形
+
     // 向后接入其它链表
     concatList(addition) {
         if (typeof addition === 'object' && addition.next) {
