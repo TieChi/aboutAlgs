@@ -65,22 +65,27 @@ class LinkedList {
         return p;
     }
     // 根据索引插入
-    insertByIndex(i, item) {
-        if (i !== 0) {
+    // 基本逻辑是只在索引值合乎插入条件的时候才执行插入操作，
+    // 否则返回原链表
+    insertByIndex(index, item) {
+        // 有头链表第一项为哨兵，不能删除或修改
+        if (index !== 0) {
             let p = this.head;
-            let index = 0;
-            while (p != null && index < (i-1)) {
+            let i = 0;
+            while (p != null && i < (index-1)) {
                 // 如果p在链表末端，停止向下查询
-                if (p.next) {
-                    p = p.next;
-                }
-                index++;
+                if (!p.next) break;
+                p = p.next;
+                i++;
             }
-            item.next = p.next;
-            p.next = item;
+            // 如果链表中存在索引值为index的位置，才插入
+            if (i === (index - 1)) {
+                item.next = p.next;
+                p.next = item;
+            }
         }
         
-        return this.getAll();
+        return this;
     }
     // 根据索引删除
     deleteByIndex(index) {
@@ -89,19 +94,18 @@ class LinkedList {
             let i = 0;
             while (p != null && i < (index-1)) {
                 // 如果p在链表末端，停止向下查询
-                if (p.next) {
-                    p = p.next;
-                }
+                if (!p.next) break;
+                p = p.next;
                 i++;
             }
-            if (p.next.next) {
+            if (p && p.next && p.next.next) {
                 p.next = p.next.next;
             } else {
                 p.next = null;
             }
         }
     
-        return this.getAll();
+        return this;
     }
 }
 
@@ -109,10 +113,10 @@ let myLink = new LinkedList();
 myLink.chainList([0, 2, 4]);
 myLink.chainList([6, 8]);
 
-console.log(myLink.findByValue(0));
-console.log(myLink.findByIndex(1));
-console.log(myLink.insertByIndex(1, new ListNode(7)));
-console.log(myLink.deleteByIndex(3));
+// console.log(myLink.findByValue(0));
+// console.log(myLink.findByIndex(1));
+console.log(myLink.insertByIndex(1, new ListNode(7)).getAll());
+console.log(myLink.deleteByIndex(2).getAll());
 
 
 

@@ -30,6 +30,9 @@ class LinkedList {
         });
         return display;
     }
+    getHead() {
+        return this.head;
+    }
     // 向链表末尾添加数组
     chainList(arr) {
         if (typeof arr === 'object' && arr.length) {
@@ -47,7 +50,7 @@ class LinkedList {
             }
         }
         
-        return this.head;
+        return this;
     }
     // 翻转单链表 方法名不明
     reverseList() {
@@ -77,7 +80,7 @@ class LinkedList {
             this.head.next = head;
         }
 
-        return this.head;
+        return this;
     }
     // 尾插法 反转单链表
     reverse2List() {
@@ -97,15 +100,18 @@ class LinkedList {
             currentNode = next;
         }
         this.head = root;
+
+        return this;
     }
     // 原地翻转
     reverse3List() {
+        // 从第一个有数据的节点开始翻转
+        let begin = this.head.next;
         let t = null;
-        let p = this.head;
-        let q = this.head.next;
+        let p = begin;
+        let q = begin.next;
         let next = null;
-        while(q != null){
-            console.log(t);
+        while (q != null) {
             next = q.next;
             q.next = p;
             p.next = t;
@@ -113,45 +119,73 @@ class LinkedList {
             p = q;
             q = next;
         }
-        this.head = p;
+        begin = p;
+        // 把翻转后的链表重新接到哨兵后面
+        this.head.next = begin;
+
+        return this;
     }
     // 检查环形
 
-    // 向后接入其它链表
-    concatList(addition) {
-        if (typeof addition === 'object' && addition.next) {
-            let p = this.head;
+}
+// 合并任意多个链表
+function concatList() {
+    let len = arguments.length;
+    // 该函数的参数只接收LinkedList的实例
+    let i = 0;
+    while (i < len) {
+        if (!(arguments[i] instanceof LinkedList)) {
+            console.log('参数出错');
+            return;
+        }
+        ++i;
+    }
+    if (len === 0) {
+        return new ListNode(null);
+    }
+    if (len === 1) {
+        return arguments[0].getHead();
+    }
+    if (len > 1) {
+        let i = 0;
+        while (i < (len - 1)) {
+            let p = arguments[i].getHead();
             while (p.next != null) {
                 p = p.next;
             }
             let tail = p;
-            tail.next = addition.next;
+            if ((i + 1) !== len) {
+                let nextHead = arguments[i+1].getHead();
+                tail.next = nextHead.next;
+                // 手动删除合并后冗余的哨兵
+                delete nextHead;
+            }
+            ++i;
         }
-        
-        return this.head;
+
+        return arguments[0].getHead();
     }
 }
+// 根据head打印出对应链表
+function displayAll(head) {
+    let display = [];
+    let p = head;
+    while (p.next && typeof p.next === 'object') {
+        display.push(p.val);
+        p = p.next;
+    }
+    display.push(p.val);
+    console.log(display);
+}
 
-// let myLink1 = new LinkedList();
-// myLink1.chainList([1, 3, 5, 7, 9]);
-// let myLink2Head = new LinkedList().chainList([2, 4, 6, 8]);
-// myLink1.concatList(myLink2Head);
-// console.log(myLink1.getAll());
+/*多种方法翻转链表的结果*/
+console.log( new LinkedList().chainList([1, 3, 5, 7, 9]).reverseList().getAll() );
+console.log( new LinkedList().chainList([0, 2, 4, 6, 8]).reverse2List().getAll() );
+console.log( new LinkedList().chainList([1, 3, 5, 7, 9]).reverse3List().getAll() );
 
-// let myList3 = new LinkedList();
-// myList3.chainList([1, 3, 5, 7, 9]);
-// console.log(myList3.getAll());
-// myList3.reverseList();
-// console.log(myList3.getAll());
-
-// let myList4 = new LinkedList();
-// myList4.chainList([0, 2, 4, 6, 8]);
-// console.log(myList4.getAll());
-// myList4.reverse2List();
-// console.log(myList4.getAll());
-
-let myList5 = new LinkedList();
-myList5.chainList([0, 2, 4, 6, 8]);
-console.log(myList5.getAll());
-myList5.reverse3List();
-console.log(myList5.getAll());
+/*合并链表结果*/
+let myLink1 = new LinkedList().chainList([1, 3, 5, 7, 9]);
+let myLink2 = new LinkedList().chainList([2, 4, 6, 8]);
+let myLink3 = new LinkedList().chainList([9, 4, 15, 18, 8]);
+let head = concatList(myLink1, myLink2, myLink3);
+displayAll(head);
