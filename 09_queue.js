@@ -75,7 +75,6 @@ class CircularQueue {
         if (this.tail % this.arr.length !== this.head) {
             this.arr[this.tail] = n;
             this.tail = (this.tail + 1) % this.arr.length;
-
         }
 
         return this;

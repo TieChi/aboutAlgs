@@ -3,7 +3,7 @@
     可扩展练习：
         链表中环的检测
         删除链表倒数第 n 个结点
-        求链表的中间结点
+        求链表的中间结点（判断回文）
  */
 
 // 链表节点
@@ -107,6 +107,7 @@ class LinkedList {
         return this;
     }
     // 原地翻转
+    // 这种翻转方法没有看懂
     reverse3List() {
         // 从第一个有数据的节点开始翻转
         let begin = this.head.next;
@@ -128,8 +129,6 @@ class LinkedList {
 
         return this;
     }
-    // 检查环形
-
 }
 // 合并任意多个链表
 function concatList() {
