@@ -14,9 +14,9 @@ function bsearch(arr, n) {
         let mid = Math.floor(low + ((high - low) >> 1));
         // 当剩余待查找量为2时，不排除arr[mid]会导致死循环
         if (n > arr[mid]) {
-            low = mid - 1;
+            low = mid + 1;
         } else if (n < arr[mid]) {
-            high = mid + 1;
+            high = mid - 1;
         } else {
             return mid;
         }
@@ -24,7 +24,7 @@ function bsearch(arr, n) {
     return -1;
 }
 
-// console.log(bsearch(arr, 95));
+console.log(bsearch(arr, 12));
 
 // 二分查找的递归实现
 function bsearch2(arr, n) {
@@ -51,6 +51,43 @@ function bsearchInternally(arr, low, high, n) {
 * 使用二分查找原理求n精确到小数点后6位的平方根
 * */
 
-function getSquareRoot() {
+function getSquareRoot(n) {
+    let low = 0;
+    let high = n;
 
+    while(low < high) {
+        let mid = Math.floor(low + ((high - low) >> 1));
+        if (n > mid^2) {
+            low = mid - 1;
+        } else if (n < mid^2) {
+            high = mid + 1;
+        } else {
+            return mid;
+        }
+    }
 }
+
+
+console.log(getSquareRoot(12));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
