@@ -2,11 +2,11 @@
 /*
 * 基于数组的队列
 */
+// 从tail处入队，head处出队
 class Queue {
     constructor(len) {
         this.arr = [1, 3, 5, 7, 9];
         this.arr.length = len;
-        // 表示队列入口和出口的指针，从tail处增加，从head处减少
         this.head = 0;
         this.tail = 0;
     }
@@ -25,6 +25,8 @@ class Queue {
         console.log(this.arr);
     }
     enqueue(n) {
+        // 如果数据已经在tail方向塞满，
+        // 整体向head方向移动
         if (this.head !== 0 && this.tail === this.arr.length) {
             for (let i = this.head; i < this.tail; i++) {
                 this.arr[i - this.head] = this.arr[i];
@@ -87,4 +89,55 @@ class CircularQueue {
     }
 }
 
-new CircularQueue(5).init().dequeue().enqueue(13).enqueue(15).enqueue(23).displayAll();
+// 链表节点
+class ListNode{
+    constructor(val) {
+        this.val = val;
+        this.next = null;
+    }
+}
+
+// 链表实现队列
+// 队列是在一端入队另一端出队的数据结构，不能使用哨兵
+class linkedQueue {
+    constructor() {
+        this.head = null;
+        this.tail = null;
+    }
+    displayAll() {
+        if (this.head) {
+            var arr = [];
+            var p = this.head;
+            while (p.next) {
+                arr.push(p.val);
+                p = p.next;
+            }
+            arr.push(p.val);
+            console.log(arr);
+        } else {
+            console.log(void 0);
+        }
+    }
+    enqueue(n) {
+        if (!this.tail) {
+            this.head = new ListNode(n);
+            this.tail = this.head;
+        } else {
+            this.tail.next = new ListNode(n);
+            this.tail = this.tail.next;
+        }
+
+        return this;
+    }
+    dequeue() {
+        if (this.head) {
+            this.head = this.head.next;
+        } else {
+            this.head = null;
+        }
+
+        return this;
+    }
+}
+
+new linkedQueue().enqueue(32).enqueue(32).dequeue().dequeue().displayAll();
