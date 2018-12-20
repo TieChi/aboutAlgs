@@ -37,7 +37,7 @@ class BobbleSort {
     }
 }
 
-// console.log(new BobbleSort(arr).sort());
+console.log(new BobbleSort(arr).sort());
 
 /*
 * 回答：
@@ -64,7 +64,7 @@ class InsertionSort {
             let j = i - 1;
             // 查找插入的位置：
             // 从后向前遍历i之前的数据（也就是已排序部分），
-            // 如果遍历到的值比value大，就把该值向后移动1位，直到找到this.arr[j]小于或等于value的情况。
+            // 如果遍历到的值比value大，就把该值向前移动1位，直到找到this.arr[j]小于或等于value的情况。
             for (; j >= 0; --j) {
                 if (this.arr[j] > value) {
                     this.arr[j+1] = this.arr[j];  // 数据移动
@@ -81,7 +81,7 @@ class InsertionSort {
     }
 }
 
-console.log(new InsertionSort(arr).sort());
+// console.log(new InsertionSort(arr).sort());
 
 /*
 * 1.是。插入排序不需要多余的存储空间，是原地排序。
