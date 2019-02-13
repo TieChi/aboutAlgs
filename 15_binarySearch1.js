@@ -67,7 +67,6 @@ function getSquareRoot(n) {
     }
 }
 
-
 console.log(getSquareRoot(12));
 
 
