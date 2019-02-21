@@ -20,10 +20,11 @@ class mergeSort {
         while (left.length && right.length) {
             // 如果左右有值相同，我们可以让左边的值优先放入tmp临时数组，
             // 这也是归并排序稳定的关键
-            if (left[0] <= right[0])
+            if (left[0] <= right[0]) {
                 tmp.push(left.shift());
-            else
+            } else {
                 tmp.push(right.shift());
+            }
         }
 
         return tmp.concat(left, right);
@@ -42,7 +43,7 @@ class mergeSort {
     }
 }
 
-// console.log(new mergeSort().devide(arr));
+console.log(new mergeSort().devide(arr));
 
 /*
 * 快速排序
@@ -117,6 +118,6 @@ class QuickSort2 {
 }
 
 // 是原地排序所以也可以不取返回值，只利用函数的sideeffect
-let len = arr.length;
-console.log( new QuickSort2(arr).quickSortInternally(0, (len-1)) );
+// let len = arr.length;
+// console.log( new QuickSort2(arr).quickSortInternally(0, (len-1)) );
 
