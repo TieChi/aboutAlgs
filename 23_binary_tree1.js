@@ -20,25 +20,18 @@ class BinaryTree{
         if (!this.root.data) {
             this.root = new TreeNode(data, null, null);
         } else {
-            let current = this.root;
             let parent;
-            while (true) {
+            let current = this.root;
+            while (current.data) {
                 parent = current;
-                if (data < current.data) {
-                    current = current.left;
-                    if (current == null) {
-                        parent.left = new TreeNode(data, null, null);
-                        break;
-                    }
+                if (data < parent.data) {
+                    current = parent.left;
                 }
                 else {
-                    current = current.right;
-                    if (current == null) {
-                        parent.right = new TreeNode(data, null, null);
-                        break;
-                    }
+                    current = parent.right;
                 }
             }
+            current.data = new TreeNode(data, null, null);
         }
         return this;
     }
