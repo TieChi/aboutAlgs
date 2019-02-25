@@ -71,7 +71,7 @@ class BinaryTree{
     insertArr(arr) {
         let i = 0;
         while (i < arr.length) {
-            this.insert2(arr[i]);
+            this.insert1(arr[i]);
             ++i;
         }
         return this;
@@ -93,43 +93,44 @@ class BinaryTree{
         this.removeNode(this.root, data);
         return this;
     }
+    // removeNode是一个返回值为执行时根节点的方法
     removeNode(node, data) {
         if (node == null) {
             return null;
         }
         if (data == node.data) {
-            let current = node;
-            // 没有子节点的节点
+            // 没有子节点的节点，打断函数执行
             if (node.left == null && node.right == null) {
                 return null;
             }
-            // 没有左子节点的节点
+            // 一侧节点为空，返回对侧节点
             if (node.left == null) {
                 return node.right;
             }
-            // 没有右子节点的节点
             if (node.right == null) {
                 return node.left;
             }
             // 有两个子节点的节点
+            // 用右侧子树的最小节点替换当前节点
             var tempNode = this.getSmallest(node.right);
             node.data = tempNode.data;
-            node.right = removeNode(node.right, tempNode.data);
+            node.right = this.removeNode(node.right, tempNode.data);
             return node;
         }
+        // 与当前节点值不匹配，递归进入其子节点
         else if (data < node.data) {
             node.left = this.removeNode(node.left, data);
             return node;
         }
-        else {
+        else if (data > node.data) {
             node.right = this.removeNode(node.right, data);
             return node;
         }
     }
     getSmallest(node) {
         let current = node;
-        if (node.left) {
-            current = node.left;
+        while (current.left) {
+            current = current.left;
         }
         return current;
     }
@@ -140,10 +141,10 @@ class BinaryTree{
     midOrder(node) {
         if (node && node.data) {
             this.midOrder(node.left);
-            console.log(node.data);
+            process.stdout.write(node.data.toString() + '  ');
             this.midOrder(node.right);
         }
     }
 }
 
-console.log(new BinaryTree().insertArr(arr).remove(12).midOrderTree());
+new BinaryTree().insertArr(arr).remove(5).midOrderTree();
